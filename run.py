@@ -12,8 +12,16 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet')
 
-patients = SHEET.worksheet('patients') 
+def get_patient_data():
+    """
+    Adds new patient information to the allergy spreadsheet
+    """
+    print("Collecting new patient data.")
+    print("Please enter date of birth.")
+    print("Data should appear as follows MM/DD/YY")
+    print("Example: 01/23/20\n")
 
-data = patients.get_all_values()
+    dob_str = input("Enter DoB here: ")
+    print(f"Patient's Date of Birth is {dob_str}") 
 
-print(data)
+get_patient_data()
