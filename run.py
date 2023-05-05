@@ -35,7 +35,10 @@ def get_patient_data():
 
     age = determine_age(dob, referral_date)
     data.append(age)
-    
+
+    surgery = get_surgery()
+    data.append(surgery)
+
     print(data)
 
 def determine_id_num():
@@ -49,7 +52,7 @@ def determine_id_num():
 
 def get_date(date_type):
     """
-    Requests patient's DoB information from the user.
+    Requests date information from the user.
     Runs a while loop to collect a valid string in the MM/DD/YYYY date format
     via the terminal.
     """
@@ -87,11 +90,20 @@ def determine_age(d1,d2):
     """
     date1 = datetime.strptime(str(d1), '%m/%d/%Y') #This code was able to be created thanks to Thayif Kabir on https://stackoverflow.com/questions/56911490/calculate-the-months-between-two-dates
     date2 = datetime.strptime(str(d2), '%m/%d/%Y')
-    print (date2, date1)
     r = relativedelta.relativedelta(date2, date1)
     months = r.months
     years = r.years
     return f"{years}y{months}m"
+
+
+def get_surgery():
+    """
+    Requests patient's referring surgery information from the user,
+    and capitalises all words in the entered string.
+    """
+    print("Please enter patient's referring GP surgery\n")
+    user_input = input("Enter referring surgery here: ")
+    return user_input.title()
 
 
 def update_patient_data(data):
