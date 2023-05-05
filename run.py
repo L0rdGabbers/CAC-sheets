@@ -15,7 +15,9 @@ SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet')
 
 def get_patient_dob():
     """
-    Adds new patient information to the allergy spreadsheet
+    Adds new patient information to the allergy spreadsheet from the user.
+    Runs a while loop to collect a valid string in the MM/DD/YYYY date format
+    via the terminal.
     """
     print("Collecting new patient data.\n")
     while True:
@@ -27,6 +29,7 @@ def get_patient_dob():
 
         if validate_date(dob_str):
             print("Date is valid!")
+            return dob_str
             break
 
 
@@ -44,3 +47,4 @@ def validate_date(date):
     return True
 
 dob = get_patient_dob()
+print(dob)
