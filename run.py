@@ -39,6 +39,12 @@ def get_patient_data():
     surgery = get_surgery()
     data.append(surgery)
 
+    referrer = get_referrer()
+    data.append(referrer)
+
+    device_after_review = get_device()
+    data.append(device_after_review)
+
     print(data)
 
 def determine_id_num():
@@ -106,6 +112,16 @@ def get_surgery():
     return user_input.title()
 
 
+def get_referrer():
+    """
+    Requests's patients referrer from the user
+    """
+    print("Please enter patient's referrer")
+    print("Example: For John Smith, enter JS\n")
+    user_input = input("Enter referrer here: ")
+    return user_input.upper()
+
+
 def update_patient_data(data):
     """
     Updates patient worksheet, and adds new row with the data provided
@@ -114,5 +130,38 @@ def update_patient_data(data):
     worksheet = SHEET.worksheet('patients')
     worksheet.append_row(date)
 
+
+def get_device():
+    """
+    Requests patient's inhaler device after review
+    by providing a number of options selected by a number.
+    """
+    print("Please provide patient's inhaler device after review by entering matching number\n")
+    while True:
+        print("For Nil, enter: 0")
+        print("For DPI, enter: 1")
+        print("For Mouthpiece, enter: 2")
+        print("For Mask - APPROPRIATE, enter: 3\n")
+
+        user_input = input("Enter here: ")
+        try:
+            value = int(user_input)
+        except ValueError:
+            print('Please enter a number, as suggested.')
+            continue
+        if value == 0:
+            return "Nil"
+            break
+        elif value == 1:
+            return "DPI"
+            break
+        elif value == 2:
+            return "Mouthpiece"
+            break
+        elif value == 3:
+            return "Mask - APPROPRIATE"
+            break
+        else:
+            print(f'{user_input} is not one of the available options, please try again.\n')
 
 get_patient_data()
