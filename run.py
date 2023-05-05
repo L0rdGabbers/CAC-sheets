@@ -1,5 +1,7 @@
 import gspread
 import time
+from datetime import datetime
+from dateutil import relativedelta
 from google.oauth2.service_account import Credentials
 
 SCOPE = [
@@ -21,12 +23,19 @@ def get_patient_data():
     """
     print("Collecting new patient data.\n")
     data = []
+
     id = determine_id_num()
     data.append(id)
+
     dob = get_date("patient's DoB")
     data.append(dob)
+
     referral_date = get_date("referral date")
     data.append(referral_date)
+
+    age = determine_age(dob, referral_date)
+    data.append(age)
+    
     print(data)
 
 def determine_id_num():
@@ -69,6 +78,20 @@ def validate_date(date):
         return False
     
     return True
+
+
+def determine_age(d1,d2):
+    """
+    Calculates the age of the child on the date of the referral in the 
+    #y#m format.
+    """
+    date1 = datetime.strptime(str(d1), '%m/%d/%Y') #This code was able to be created thanks to Thayif Kabir on https://stackoverflow.com/questions/56911490/calculate-the-months-between-two-dates
+    date2 = datetime.strptime(str(d2), '%m/%d/%Y')
+    print (date2, date1)
+    r = relativedelta.relativedelta(date2, date1)
+    months = r.months
+    years = r.years
+    return f"{years}y{months}m"
 
 
 def update_patient_data(data):
