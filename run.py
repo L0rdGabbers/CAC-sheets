@@ -135,6 +135,7 @@ def get_device():
     """
     Requests patient's inhaler device after review
     by providing a number of options selected by a number.
+    Once entered, the input is then validated.
     """
     print("Please provide patient's inhaler device after review by entering matching number\n")
     while True:
