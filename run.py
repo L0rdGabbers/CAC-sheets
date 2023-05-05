@@ -17,14 +17,17 @@ def get_patient_data():
     """
     Adds new patient information to the allergy spreadsheet
     """
-    print("Collecting new patient data.")
-    print("Please enter date of birth.")
-    print("Data should appear as follows MM/DD/YYYY")
-    print("Example: 01/23/2020\n")
+    print("Collecting new patient data.\n")
+    while True:
+        print("Please enter patient's date of birth.")
+        print("Data should appear as follows MM/DD/YYYY")
+        print("Example: 01/23/2020\n")
 
-    dob_str = input("Enter DoB here: ")
-    validate_date(dob_str)
-    print(f"Patient's Date of Birth is {dob_str}")
+        dob_str = input("Enter DoB here: ")
+
+        if validate_date(dob_str):
+            print("Date is valid!")
+            break
 
 
 def validate_date(date):
@@ -34,7 +37,10 @@ def validate_date(date):
     """
     try:
         valid_date = time.strptime(date, '%m/%d/%Y')
-    except ValueError as e:
-        print(f'Invalid date: {e}, please try again\n')
+    except ValueError:
+        print(f'Invalid date: {date} does not match the MM/DD/YYYY format, please try again\n')
+        return False
+    
+    return True
 
 get_patient_data()
