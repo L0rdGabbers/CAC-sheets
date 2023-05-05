@@ -13,7 +13,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet')
 
-def get_patient_data():
+def get_patient_dob():
     """
     Adds new patient information to the allergy spreadsheet
     """
@@ -43,4 +43,4 @@ def validate_date(date):
     
     return True
 
-get_patient_data()
+dob = get_patient_dob()
