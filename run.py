@@ -13,22 +13,46 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet')
 
-def get_patient_dob():
+
+def get_patient_data():
     """
-    Adds new patient information to the allergy spreadsheet from the user.
+    Collects a range of data of varying types by calling a number of functions
+    before appending them to the allergy spreadsheet althogether.
+    """
+    print("Collecting new patient data.\n")
+    data = []
+    id = determine_id_num()
+    data.append(id)
+    dob = get_date("patient's DoB")
+    data.append(dob)
+    referral_date = get_date("referral date")
+    data.append(referral_date)
+    print(data)
+
+def determine_id_num():
+    """
+    Counts the number of patients already in the data sheet and
+    automatically assigns a new patient id number to the patient.
+    """
+    worksheet = SHEET.worksheet('patients')
+    rows = len(worksheet.get_all_values()) #This counts the number of rows with data, including the headers. It already equals the number of the next patient.
+    return rows
+
+def get_date(date_type):
+    """
+    Requests patient's DoB information from the user.
     Runs a while loop to collect a valid string in the MM/DD/YYYY date format
     via the terminal.
     """
-    print("Collecting new patient data.\n")
     while True:
-        print("Please enter patient's date of birth.")
+        print(f"Please enter {date_type}.")
         print("Data should appear as follows MM/DD/YYYY")
         print("Example: 01/23/2020\n")
 
-        dob_str = input("Enter DoB here: ")
+        dob_str = input(f"Enter {date_type} here: ")
 
         if validate_date(dob_str):
-            print("Date is valid!")
+            print("Date is valid!\n")
             return dob_str
             break
 
@@ -46,5 +70,14 @@ def validate_date(date):
     
     return True
 
-dob = get_patient_dob()
-print(dob)
+
+def update_patient_data(data):
+    """
+    Updates patient worksheet, and adds new row with the data provided
+    """
+    print("Updating patient worksheet...")
+    worksheet = SHEET.worksheet('patients')
+    worksheet.append_row(date)
+
+
+get_patient_data()
