@@ -167,6 +167,8 @@ def get_outcome():
     """
     Requests patient outcome by providing a number of options 
     selected by a number. Once entered, the input is then validated.
+    Should the answer require a comment, this option will be provided
+    and the outcome and the comment will be returned together as one cell.
     """
     outcome = ""
     comment = ""
@@ -183,7 +185,7 @@ def get_outcome():
         try:
             value = int(user_input)
         except ValueError:
-            print('Please enter a number, as suggested.')
+            print('Please enter a number, as suggested.\n')
             continue
         if value == 1:
             outcome = "Commence treatment"
@@ -195,7 +197,7 @@ def get_outcome():
                 print("Would you like to add a comment to this outcome?\n")
                 option = input("enter y or n here: ")
                 if option == "y":
-                    comment = input("Please detail your comment here: ")
+                    comment = ("; " + input("Please detail your comment here: "))
                     break
                 elif option == "n":
                     break
@@ -209,10 +211,15 @@ def get_outcome():
             outcome = "Continue"
             break
         elif value == 5:
-            outcome = "Alternative Diagnosis;"
-            comment = input("Please detail alternative diagnosis here: ")
+            outcome = "Alternative diagnosis"
+            comment = ("; " + input("Please detail the alternative diagnosis here: "))
+            break
+        elif value == 6:
+            outcome = "Discontinue treatment"
+            break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
+    return (f'{outcome}' + f'{comment}')
 
 
 
@@ -225,5 +232,4 @@ def update_patient_data(data):
     worksheet.append_row(date)
 
 
-# get_patient_data()
-get_outcome()
+get_patient_data()
