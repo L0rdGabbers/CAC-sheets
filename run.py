@@ -48,6 +48,9 @@ def get_patient_data():
     outcome = get_outcome()
     data.append(outcome)
 
+    medication = get_medication()
+    data.append(medication)
+
     print(data)
 
 def determine_id_num():
@@ -209,6 +212,17 @@ def get_outcome():
             break
         elif value == 4:
             outcome = "Continue"
+            option = ""
+            while True:
+                print("Would you like to add a comment to this outcome?\n")
+                option = input("enter y or n here: ")
+                if option == "y":
+                    comment = ("; " + input("Please detail your comment here: "))
+                    break
+                elif option == "n":
+                    break
+                else:
+                    print(f'{option} is not one of the available options, please enter y or n\n')
             break
         elif value == 5:
             outcome = "Alternative diagnosis"
@@ -222,6 +236,156 @@ def get_outcome():
     return (f'{outcome}' + f'{comment}')
 
 
+
+def get_medication():
+    """
+    Requests patient's medication after review
+    by providing a number of options selected by a number.
+    Once entered, the input is then validated.
+    """
+    medication = ""
+    print("Please provide patient's medication after review by entering matching number\n")
+    while True:
+        print("For Nil, enter: 0")
+        print("For Clenil, enter: 1")
+        print("For Flixotide, enter: 2")
+        print("For Relvar, enter: 3")
+        print("For Seretide, enter: 4")
+        print("For Symbicort, enter: 5")
+        print("For Qvar, enter: 6\n")
+
+
+        drug = input("Enter here: ")
+        try:
+            value = int(drug)
+        except ValueError:
+            print('Please enter a number, as suggested.')
+            continue
+        if value == 0:
+            return "Nil"
+            break
+        elif value == 1:
+            while True:
+                print("Clenil has been selected.")
+                print("For Clenil 50mcg 2pbd, enter: 1")
+                print("For Clenil 100mcg 1pbd, enter: 2")
+                print("For 8 weeks of Clenil, enter: 3\n")
+
+                plan = input("Enter here: ")
+                try:
+                    value2 = int(plan)
+                except ValueError:
+                    print('Please enter a number, as suggested.')
+                    continue
+                if value2 == 1:
+                    medication = "Clenil 50mcg 2pbd"
+                    break
+                if value2 == 2:
+                    medication = "Clenil 100mcg 1pbd"
+                    break
+                if value2 == 3:
+                    medication = "8 weeks of Clenil"
+                    break
+            break
+        elif value == 2:
+            while True:
+                print("Flixotide has been selected.\n")
+                print("For Flixotide 50mcg 1pbd, enter: 1")
+                print("For Flixotide 50mcg 2pbd, enter: 2")
+                print("For Flixotide 125mcg 2pbd, enter: 3\n")
+
+                plan = input("Enter here: ")
+                try:
+                    value2 = int(plan)
+                except ValueError:
+                    print('Please enter a number, as suggested.')
+                    continue
+                if value2 == 1:
+                    medication = "Flixotide 50mcg 1pbd"
+                    break
+                if value2 == 2:
+                    medication = "Flixotide 50mcg 2pbd"
+                    break
+                if value2 == 3:
+                    medication = "Flixotide 125mcg 2pbd"
+                    break
+            break
+        elif value == 3:
+            while True:
+                print("Relvar has been selected.\n")
+                print("For Relvar 92mcg, enter: 1")
+                print("For Relvar 184mcg, enter: 2\n")
+
+                plan = input("Enter here: ")
+                try:
+                    value2 = int(plan)
+                except ValueError:
+                    print('Please enter a number, as suggested.')
+                    continue
+                if value2 == 1:
+                    medication = "Relvar 92mcg"
+                    break
+                if value2 == 2:
+                    medication = "Relvar 184mcg"
+                    break
+            break
+        elif value == 4:
+            while True:
+                print("Seretide has been selected.\n")
+                print("For Seretide 50mcg 2pbd, enter: 1")
+                print("For Seretide 100mcg 1pbd, enter: 2")
+                print("For Seretide 125mcg 2pbd, enter: 3")
+
+
+                plan = input("Enter here: ")
+                try:
+                    value2 = int(plan)
+                except ValueError:
+                    print('Please enter a number, as suggested.')
+                    continue
+                if value == 1:
+                    medication = "Seretide 50mcg 2pbd"
+                    break
+                if value2 == 2:
+                    medication = "Seretide 100mcg 1pbd"
+                    break
+                if value2 == 3:
+                    medication = "Seretide 125mcg 2pbd"
+                    break
+            break
+        elif value == 5:
+            while True:
+                print("Symbicort has been selected.\n")
+                print("For Symbicort MART 100mcg, enter: 1")
+                print("For Symbicort MART 200mcg, enter: 2")
+                print("For Symbicort 100 SMART, enter: 3")
+                print("For Symbicort 100mcg 2pbd, enter: 4")
+
+
+                plan = input("Enter here: ")
+                try:
+                    value2 = int(plan)
+                except ValueError:
+                    print('Please enter a number, as suggested.')
+                    continue
+                if value2 == 1:
+                    medication = "Symbicort MART 100mcg"
+                    break
+                if value2 == 2:
+                    medication = "Symbicort MART 200mcg"
+                    break
+                if value2 == 3:
+                    medication = "Symbicort 100 SMART"
+                    break
+                if value2 == 4:
+                    medication = "Symbicort 100mcg 2pbd"
+                    break
+            break
+        elif value == 6:
+            medication = "Qvar 50mcg 2pbd"
+        else:
+            print(f'{user_input} is not one of the available options, please try again.\n')
+    return medication
 
 def update_patient_data(data):
     """
