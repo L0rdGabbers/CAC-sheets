@@ -45,6 +45,9 @@ def get_patient_data():
     device_after_review = get_device()
     data.append(device_after_review)
 
+    outcome = get_outcome()
+    data.append(outcome)
+
     print(data)
 
 def determine_id_num():
@@ -122,13 +125,6 @@ def get_referrer():
     return user_input.upper()
 
 
-def update_patient_data(data):
-    """
-    Updates patient worksheet, and adds new row with the data provided
-    """
-    print("Updating patient worksheet...")
-    worksheet = SHEET.worksheet('patients')
-    worksheet.append_row(date)
 
 
 def get_device():
@@ -165,4 +161,69 @@ def get_device():
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
 
-get_patient_data()
+
+
+def get_outcome():
+    """
+    Requests patient outcome by providing a number of options 
+    selected by a number. Once entered, the input is then validated.
+    """
+    outcome = ""
+    comment = ""
+    print("Please provide patient outcome by entering matching number\n")
+    while True:
+        print("For 'Commence treatment', enter: 1")
+        print("For 'Increased', enter: 2")
+        print("For 'Optimised', enter: 3")
+        print("For 'Continue', enter: 4")
+        print("For 'Alternative diagnosis', enter: 5")
+        print("For 'Discontinue treatment', enter: 6\n")
+
+        user_input = input("Enter here: ")
+        try:
+            value = int(user_input)
+        except ValueError:
+            print('Please enter a number, as suggested.')
+            continue
+        if value == 1:
+            outcome = "Commence treatment"
+            break
+        elif value == 2:
+            outcome = "Increased"
+            option = ""
+            while True:
+                print("Would you like to add a comment to this outcome?\n")
+                option = input("enter y or n here: ")
+                if option == "y":
+                    comment = input("Please detail your comment here: ")
+                    break
+                elif option == "n":
+                    break
+                else:
+                    print(f'{option} is not one of the available options, please enter y or n\n')
+            break
+        elif value == 3:
+            outcome = "Optimised"
+            break
+        elif value == 4:
+            outcome = "Continue"
+            break
+        elif value == 5:
+            outcome = "Alternative Diagnosis;"
+            comment = input("Please detail alternative diagnosis here: ")
+        else:
+            print(f'{user_input} is not one of the available options, please try again.\n')
+
+
+
+def update_patient_data(data):
+    """
+    Updates patient worksheet, and adds new row with the data provided
+    """
+    print("Updating patient worksheet...")
+    worksheet = SHEET.worksheet('patients')
+    worksheet.append_row(date)
+
+
+# get_patient_data()
+get_outcome()
