@@ -482,6 +482,10 @@ def get_reason():
 
 
 def get_note():
+    """
+    Asks if the user wants to add any final notes regarding the patient,
+    if they reply yes, they can add a comment and it will be ammended.
+    """
     note = ""
     while True:
         print("Are there any general notes you would like to add?\n")
