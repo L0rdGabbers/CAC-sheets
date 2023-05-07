@@ -47,6 +47,24 @@ def get_patient_data():
 
     outcome = get_outcome()
     data.append(outcome)
+    option = ""
+    comment = ""
+    if outcome == "Continue" or outcome == "Increased":
+        while True:
+            print("Would you like to add a comment to this outcome?\n")
+            option = input("enter y or n here: ")
+            if option == "y":
+                comment = input("Please detail your comment here: ")
+                break
+            elif option == "n":
+                break
+            else:
+                print(f'{option} is not one of the available options, please enter y or n\n')
+            break
+    elif outcome == "Alternative diagnosis":
+        comment = input("Please detail alternative diagnosis here: ")
+    data.append(comment)
+
 
     medication = get_medication()
     data.append(medication)
@@ -195,38 +213,15 @@ def get_outcome():
             break
         elif value == 2:
             outcome = "Increased"
-            option = ""
-            while True:
-                print("Would you like to add a comment to this outcome?\n")
-                option = input("enter y or n here: ")
-                if option == "y":
-                    comment = ("; " + input("Please detail your comment here: "))
-                    break
-                elif option == "n":
-                    break
-                else:
-                    print(f'{option} is not one of the available options, please enter y or n\n')
             break
         elif value == 3:
             outcome = "Optimised"
             break
         elif value == 4:
             outcome = "Continue"
-            option = ""
-            while True:
-                print("Would you like to add a comment to this outcome?\n")
-                option = input("enter y or n here: ")
-                if option == "y":
-                    comment = ("; " + input("Please detail your comment here: "))
-                    break
-                elif option == "n":
-                    break
-                else:
-                    print(f'{option} is not one of the available options, please enter y or n\n')
             break
         elif value == 5:
             outcome = "Alternative diagnosis"
-            comment = ("; " + input("Please detail the alternative diagnosis here: "))
             break
         elif value == 6:
             outcome = "Discontinue treatment"
@@ -235,6 +230,11 @@ def get_outcome():
             print(f'{user_input} is not one of the available options, please try again.\n')
     return (f'{outcome}' + f'{comment}')
 
+
+def get_comment():
+    """
+    Requests a comment or alternative diagnosis details from the user.
+    """
 
 
 def get_medication():
@@ -259,7 +259,7 @@ def get_medication():
         try:
             value = int(drug)
         except ValueError:
-            print('Please enter a number, as suggested.')
+            print('Please enter a number, as suggested.\n')
             continue
         if value == 0:
             return "Nil"
@@ -275,7 +275,7 @@ def get_medication():
                 try:
                     value2 = int(plan)
                 except ValueError:
-                    print('Please enter a number, as suggested.')
+                    print('Please enter a number, as suggested.\n')
                     continue
                 if value2 == 1:
                     medication = "Clenil 50mcg 2pbd"
@@ -298,7 +298,7 @@ def get_medication():
                 try:
                     value2 = int(plan)
                 except ValueError:
-                    print('Please enter a number, as suggested.')
+                    print('Please enter a number, as suggested.\n')
                     continue
                 if value2 == 1:
                     medication = "Flixotide 50mcg 1pbd"
@@ -320,7 +320,7 @@ def get_medication():
                 try:
                     value2 = int(plan)
                 except ValueError:
-                    print('Please enter a number, as suggested.')
+                    print('Please enter a number, as suggested.\n')
                     continue
                 if value2 == 1:
                     medication = "Relvar 92mcg"
@@ -334,14 +334,14 @@ def get_medication():
                 print("Seretide has been selected.\n")
                 print("For Seretide 50mcg 2pbd, enter: 1")
                 print("For Seretide 100mcg 1pbd, enter: 2")
-                print("For Seretide 125mcg 2pbd, enter: 3")
+                print("For Seretide 125mcg 2pbd, enter: 3\n")
 
 
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
                 except ValueError:
-                    print('Please enter a number, as suggested.')
+                    print('Please enter a number, as suggested.\n')
                     continue
                 if value == 1:
                     medication = "Seretide 50mcg 2pbd"
@@ -359,14 +359,14 @@ def get_medication():
                 print("For Symbicort MART 100mcg, enter: 1")
                 print("For Symbicort MART 200mcg, enter: 2")
                 print("For Symbicort 100 SMART, enter: 3")
-                print("For Symbicort 100mcg 2pbd, enter: 4")
+                print("For Symbicort 100mcg 2pbd, enter: 4\n")
 
 
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
                 except ValueError:
-                    print('Please enter a number, as suggested.')
+                    print('Please enter a number, as suggested.\n')
                     continue
                 if value2 == 1:
                     medication = "Symbicort MART 100mcg"
@@ -383,6 +383,7 @@ def get_medication():
             break
         elif value == 6:
             medication = "Qvar 50mcg 2pbd"
+            break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
     return medication
