@@ -19,7 +19,7 @@ SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet')
 def get_patient_data():
     """
     Collects a range of data of varying types by calling a number of functions
-    before appending them to the allergy spreadsheet althogether.
+    before appending them to a list called data to be appended to the spreadsheet.
     """
     print("Collecting new patient data.\n")
     data = []
@@ -42,7 +42,7 @@ def get_patient_data():
     referrer = get_referrer()
     data.append(referrer)
 
-    device_after_review = get_device()
+    device_after_review = get_device("after")
     data.append(device_after_review)
 
     outcome = get_outcome()
@@ -65,9 +65,11 @@ def get_patient_data():
         comment = input("Please detail alternative diagnosis here: ")
     data.append(comment)
 
-
     medication = get_medication()
     data.append(medication)
+
+    device_before_review = get_device("before")
+    data.append(device_before_review)
 
     print(data)
 
@@ -148,36 +150,73 @@ def get_referrer():
 
 
 
-def get_device():
+def get_device(review):
     """
-    Requests patient's inhaler device after review
+    Requests patient's inhaler device before/after review
     by providing a number of options selected by a number.
     Once entered, the input is then validated.
     """
     print("Please provide patient's inhaler device after review by entering matching number\n")
     while True:
-        print("For Nil, enter: 0")
-        print("For DPI, enter: 1")
-        print("For Mouthpiece, enter: 2")
-        print("For Mask - APPROPRIATE, enter: 3\n")
+        if review == "after":
+            print("For Nil, enter: 0")
+            print("For DPI, enter: 1")
+            print("For Mouthpiece, enter: 2")
+            print("For Mask - APPROPRIATE, enter: 3\n")
+        elif review == "before":
+            print("For Not on treatment, enter: 0")
+            print("For DPI, enter: 1")
+            print("For DPI Turbohaler, enter: 2")
+            print("For Mouthpiece, enter: 3")
+            print("For Mask - APPROPRIATE, enter: 4")
+            print("For Mask - INAPPROPRIATE, enter: 5")
+            print("For Breath actuated, enter: 6")
+            print("For No spacer, enter: 7")
+            print("For Other, enter: 8\n")
+
+
 
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
         except ValueError:
-            print('Please enter a number, as suggested.')
+            print('Please enter a number, as suggested.\n')
             continue
-        if value == 0:
+        if value == 0 and review == "after":
             return "Nil"
             break
-        elif value == 1:
+        elif value == 1 and review == "after":
             return "DPI"
             break
-        elif value == 2:
+        elif value == 2 and review == "after":
             return "Mouthpiece"
             break
-        elif value == 3:
+        elif value == 3 and review == "after":
             return "Mask - APPROPRIATE"
+            break
+        elif value == 0 and review == "before":
+            return "Not on treatment"
+            break
+        elif value == 1 and review == "before":
+            return "DPI"
+            break
+        elif value == 2 and review == "before":
+            return "Mouthpiece"
+            break
+        elif value == 3 and review == "before":
+            return "Mask - APPROPRIATE"
+            break
+        elif value == 4 and review == "before":
+            return "Mask - INAPPROPRIATE"
+            break
+        elif value == 5 and review == "before":
+            return "Breath actuated"
+            break
+        elif value == 6 and review == "before":
+            return "No spacer"
+            break
+        elif value == 7 and review == "before":
+            return input("Please detail inhaler device here: ")
             break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
