@@ -74,6 +74,9 @@ def get_patient_data():
     test = get_test()
     data.append(test)
 
+    reason = get_reason()
+    data.append(reason)
+
     print(data)
 
 def determine_id_num():
@@ -441,6 +444,33 @@ def get_test():
         else:
             print(f'{option} is not one of the available options, please enter y or n\n')
     return test
+
+
+def get_reason():
+    """
+    Requests referral reason from the user
+    by providing a number of options selected by a number.
+    """
+    while True:
+        print("What was the reason for referral?\n")
+        print("For Poor control, enter: 1")
+        print("For Diagnostic testing, enter: 2\n")
+
+        user_input = input("Enter here: ")
+        try:
+            value = int(user_input)
+        except ValueError:
+            print('Please enter a number, as suggested.\n')
+            continue
+        if value == 1:
+            reason = "Poor control"
+            break
+        elif value == 2:
+            reason = "Diagnostic testing"
+            break
+        else:
+            print(f'{user_input} is not one of the available options, please try again.\n')
+    return reason
 
 
 def update_patient_data(data):
