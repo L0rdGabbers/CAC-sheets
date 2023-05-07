@@ -71,6 +71,9 @@ def get_patient_data():
     device_before_review = get_device("before")
     data.append(device_before_review)
 
+    test = get_test()
+    data.append(test)
+
     print(data)
 
 def determine_id_num():
@@ -166,13 +169,12 @@ def get_device(review):
         elif review == "before":
             print("For Not on treatment, enter: 0")
             print("For DPI, enter: 1")
-            print("For DPI Turbohaler, enter: 2")
-            print("For Mouthpiece, enter: 3")
-            print("For Mask - APPROPRIATE, enter: 4")
-            print("For Mask - INAPPROPRIATE, enter: 5")
-            print("For Breath actuated, enter: 6")
-            print("For No spacer, enter: 7")
-            print("For Other, enter: 8\n")
+            print("For Mouthpiece, enter: 2")
+            print("For Mask - APPROPRIATE, enter: 3")
+            print("For Mask - INAPPROPRIATE, enter: 4")
+            print("For Breath actuated, enter: 5")
+            print("For No spacer, enter: 6")
+            print("For Other, enter: 7\n")
 
 
 
@@ -269,11 +271,6 @@ def get_outcome():
             print(f'{user_input} is not one of the available options, please try again.\n')
     return (f'{outcome}' + f'{comment}')
 
-
-def get_comment():
-    """
-    Requests a comment or alternative diagnosis details from the user.
-    """
 
 
 def get_medication():
@@ -426,6 +423,25 @@ def get_medication():
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
     return medication
+
+
+def get_test():
+    """
+    Requests information on whether allergy testing was performed on the patient.
+    """
+    while True:
+        print("Was allergy testing performed on the patient?\n")
+        option = input("enter y or n here: ")
+        if option == "y":
+            test = "Yes"
+            break
+        elif option == "n":
+            test = ""
+            break
+        else:
+            print(f'{option} is not one of the available options, please enter y or n\n')
+    return test
+
 
 def update_patient_data(data):
     """
