@@ -82,6 +82,9 @@ def get_patient_data():
     reason = get_reason()
     data.append(reason)
 
+    note = get_note()
+    data.append(note)
+
     print(data)
 
 def determine_id_num():
@@ -476,6 +479,22 @@ def get_reason():
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
     return reason
+
+
+def get_note():
+    note = ""
+    while True:
+        print("Are there any general notes you would like to add?\n")
+        option = input("enter y or n here: ")
+        if option == "y":
+            note = input("Please detail your notes here: ")
+            break
+        elif option == "n":
+            break
+        else:
+            print(f'{option} is not one of the available options, please enter y or n\n')
+        break
+    return note
 
 
 def update_patient_data(data):
