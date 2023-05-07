@@ -62,7 +62,12 @@ def get_patient_data():
                 print(f'{option} is not one of the available options, please enter y or n\n')
             break
     elif outcome == "Alternative diagnosis":
-        comment = input("Please detail alternative diagnosis here: ")
+        while True:
+            comment = input("Please detail alternative diagnosis here: ")
+            if comment == "":
+                print("You haven't entered anything, and an alternative diagnosis is required.\n")
+            else:
+                break
     data.append(comment)
 
     medication = get_medication()
