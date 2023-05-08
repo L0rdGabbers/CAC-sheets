@@ -85,7 +85,7 @@ def get_patient_data():
     note = get_note()
     data.append(note)
 
-    print(data)
+    return data
 
 def determine_id_num():
     """
@@ -506,8 +506,11 @@ def update_patient_data(data):
     Updates patient worksheet, and adds new row with the data provided
     """
     print("Updating patient worksheet...")
-    worksheet = SHEET.worksheet('patients')
-    worksheet.append_row(date)
+    patient_worksheet = SHEET.worksheet('patients')
+    patient_worksheet.append_row(data)
+    print("Patient worksheet updated successfully.\n")
 
 
-get_patient_data()
+patient_data = get_patient_data()
+
+update_patient_data(patient_data)
