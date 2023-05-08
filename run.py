@@ -390,7 +390,7 @@ def get_medication():
                 except ValueError:
                     print('Please enter a number, as suggested.\n')
                     continue
-                if value == 1:
+                if value2 == 1:
                     medication = "Seretide 50mcg 2pbd"
                     break
                 if value2 == 2:
