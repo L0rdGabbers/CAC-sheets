@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from dateutil import relativedelta
 from google.oauth2.service_account import Credentials
+import numpy
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -170,7 +171,7 @@ def get_device(review):
     by providing a number of options selected by a number.
     Once entered, the input is then validated.
     """
-    print("Please provide patient's inhaler device after review by entering matching number\n")
+    print(f"Please provide patient's inhaler device {review} review by entering matching number\n")
     while True:
         if review == "after":
             print("For Nil, enter: 0")
@@ -511,6 +512,29 @@ def update_patient_data(data):
     print("Patient worksheet updated successfully.\n")
 
 
-patient_data = get_patient_data()
+def get_practice_numbers():
+    """
+    Provides a list of the number of children referred from each practice.
+    """
+    print("Calculating number of patients from each practice...\n")
+    practices = SHEET.worksheet("patients").col_values(5)
+    practices.pop(0)
+    a = numpy.array(practices)
+    unique, counts = numpy.unique(a, return_counts=True)
+    my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
+    for key,value in my_dict.items():
+        print("{}: {}\n".format(key,value))
+        
 
-update_patient_data(patient_data)
+def main():
+    """
+    Run all program functions
+    """
+    patient_data = get_patient_data()
+    update_patient_data(patient_data)
+
+
+
+print("Welcome to CAC data automation.\n")
+#main()
+get_practice_numbers()
