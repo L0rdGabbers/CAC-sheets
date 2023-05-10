@@ -50,19 +50,7 @@ def get_patient_data():
     data.append(outcome)
     option = ""
     comment = ""
-    if outcome == "Continue" or outcome == "Increased":
-        while True:
-            print("Would you like to add a comment to this outcome?\n")
-            option = input("enter y or n here: ")
-            if option == "y":
-                comment = input("Please detail your comment here: ")
-                break
-            elif option == "n":
-                break
-            else:
-                print(f'{option} is not one of the available options, please enter y or n\n')
-            break
-    elif outcome == "Alternative diagnosis":
+    if outcome == "Alternative diagnosis":
         while True:
             comment = input("Please detail alternative diagnosis here: ")
             if comment == "":
@@ -443,12 +431,18 @@ def get_test():
     """
     while True:
         print("Was allergy testing performed on the patient?\n")
-        option = input("enter y or n here: ")
-        if option == "y":
+        print("1: Yes")
+        print("2: Yes - Adverse reaction")
+        print("3: No")
+        option = input("Enter here: ")
+        if option == "1":
             test = "Yes"
             break
-        elif option == "n":
-            test = ""
+        elif option == "2":
+            test = "Yes - Adverse reaction"
+            break
+        elif option == "3":
+            test = "No"
             break
         else:
             print(f'{option} is not one of the available options, please enter y or n\n')
@@ -513,13 +507,14 @@ def update_patient_data(data):
     main()
 
 
-def get_practice_numbers():
+def get_numbers(col_num):
     """
     Provides a list of the number of children referred from each practice.
     """
     print("Calculating number of patients from each practice...\n")
-    practices = SHEET.worksheet("patients").col_values(5)
+    practices = SHEET.worksheet("patients").col_values(col_num)
     practices.pop(0)
+    practices = [x for x in practices if x != ""]
     a = numpy.array(practices)
     unique, counts = numpy.unique(a, return_counts=True)
     my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
@@ -528,21 +523,6 @@ def get_practice_numbers():
     print("Data complete!")
     main()
 
-
-def get_referral_numbers():
-    """
-    Provides a list of the number of referral reasons from the whole worksheet
-    """
-    print("Calculating number of referral reasons...\n")
-    practices = SHEET.worksheet("patients").col_values(13)
-    practices.pop(0)
-    a = numpy.array(practices)
-    unique, counts = numpy.unique(a, return_counts=True)
-    my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
-    for key,value in my_dict.items():
-        print("{}: {}\n".format(key,value))
-    print("Data complete!")
-    main()
 
 
 def main():
@@ -592,9 +572,10 @@ def whole_data_menu():
         print("1: Retreive number of children from each practice")
         print("2: Retrieve number of reasons for referrals")
         print("3: Retrieve number of children per outcome group")
-        print("4: Retrieve number of children per inhalation device before and after review")
-        print("5: Retrieve number of children: who had recieved allergy testing")
-        print("6: Retreive number of children with an alternative diagnosis\n")
+        print("4: Retrieve number of children per inhalation device at referral")
+        print("5: Retrieve number of children per inhalation device after review")
+        print("6: Retrieve number of children: who had recieved allergy testing")
+        print("7: Retreive number of children with an alternative diagnosis\n")
 
         user_input = input("Enter here: ")
         try:
@@ -603,10 +584,25 @@ def whole_data_menu():
             print('Please enter a number, as suggested.\n')
             continue
         if value == 1:
-            get_practice_numbers()
+            get_numbers(5)
             break
         elif value == 2:
-            get_referral_numbers()
+            get_numbers(13)
+            break
+        elif value == 3:
+            get_numbers(8)
+            break
+        elif value == 4:
+            get_numbers(11)
+            break
+        elif value == 5:
+            get_numbers(7)
+            break
+        elif value == 6:
+            get_numbers(12)
+            break
+        elif value == 7:
+            get_numbers(9)
             break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
