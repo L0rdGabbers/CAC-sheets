@@ -48,7 +48,6 @@ def get_patient_data():
 
     outcome = get_outcome()
     data.append(outcome)
-    option = ""
     comment = ""
     if outcome == "Alternative diagnosis":
         while True:
@@ -162,19 +161,19 @@ def get_device(review):
     print(f"Please provide patient's inhaler device {review} review by entering matching number\n")
     while True:
         if review == "after":
-            print("For Nil, enter: 0")
-            print("For DPI, enter: 1")
-            print("For Mouthpiece, enter: 2")
-            print("For Mask - APPROPRIATE, enter: 3\n")
+            print("1: Nil")
+            print("2: DPI")
+            print("3: Mouthpiece")
+            print("4: Mask - APPROPRIATE\n")
         elif review == "before":
-            print("For Not on treatment, enter: 0")
-            print("For DPI, enter: 1")
-            print("For Mouthpiece, enter: 2")
-            print("For Mask - APPROPRIATE, enter: 3")
-            print("For Mask - INAPPROPRIATE, enter: 4")
-            print("For Breath actuated, enter: 5")
-            print("For No spacer, enter: 6")
-            print("For Other, enter: 7\n")
+            print("1: Not on treatment")
+            print("2: DPI")
+            print("3: Mouthpiece")
+            print("4: Mask - APPROPRIATE")
+            print("5: Mask - INAPPROPRIATE")
+            print("6: Breath actuated")
+            print("7: No spacer")
+            print("8: Other\n")
 
 
 
@@ -184,40 +183,40 @@ def get_device(review):
         except ValueError:
             print('Please enter a number, as suggested.\n')
             continue
-        if value == 0 and review == "after":
+        if value == 1 and review == "after":
             return "Nil"
             break
-        elif value == 1 and review == "after":
-            return "DPI"
-            break
         elif value == 2 and review == "after":
-            return "Mouthpiece"
+            return "DPI"
             break
         elif value == 3 and review == "after":
-            return "Mask - APPROPRIATE"
-            break
-        elif value == 0 and review == "before":
-            return "Not on treatment"
-            break
-        elif value == 1 and review == "before":
-            return "DPI"
-            break
-        elif value == 2 and review == "before":
             return "Mouthpiece"
             break
-        elif value == 3 and review == "before":
+        elif value == 4 and review == "after":
             return "Mask - APPROPRIATE"
             break
+        elif value == 1 and review == "before":
+            return "Not on treatment"
+            break
+        elif value == 2 and review == "before":
+            return "DPI"
+            break
+        elif value == 3 and review == "before":
+            return "Mouthpiece"
+            break
         elif value == 4 and review == "before":
-            return "Mask - INAPPROPRIATE"
+            return "Mask - APPROPRIATE"
             break
         elif value == 5 and review == "before":
-            return "Breath actuated"
+            return "Mask - INAPPROPRIATE"
             break
         elif value == 6 and review == "before":
-            return "No spacer"
+            return "Breath actuated"
             break
         elif value == 7 and review == "before":
+            return "No spacer"
+            break
+        elif value == 8 and review == "before":
             return input("Please detail inhaler device here: ")
             break
         else:
@@ -236,12 +235,12 @@ def get_outcome():
     comment = ""
     print("Please provide patient outcome by entering matching number\n")
     while True:
-        print("For 'Commence treatment', enter: 1")
-        print("For 'Increased', enter: 2")
-        print("For 'Optimised', enter: 3")
-        print("For 'Continue', enter: 4")
-        print("For 'Alternative diagnosis', enter: 5")
-        print("For 'Discontinue treatment', enter: 6\n")
+        print("1: Commence treatment")
+        print("2: Increased")
+        print("3: Optimised")
+        print("4: Continue")
+        print("5: Alternative Diagnosis")
+        print("6: Discontinue treatment\n")
 
         user_input = input("Enter here: ")
         try:
@@ -282,13 +281,13 @@ def get_medication():
     medication = ""
     print("Please provide patient's medication after review by entering matching number\n")
     while True:
-        print("For Nil, enter: 0")
-        print("For Clenil, enter: 1")
-        print("For Flixotide, enter: 2")
-        print("For Relvar, enter: 3")
-        print("For Seretide, enter: 4")
-        print("For Symbicort, enter: 5")
-        print("For Qvar, enter: 6\n")
+        print("1: Nil")
+        print("2: Clenil")
+        print("3: Flixotide")
+        print("4: Relvar")
+        print("5: Seretide")
+        print("6: Symbicort")
+        print("7: Qvar\n")
 
 
         drug = input("Enter here: ")
@@ -297,15 +296,15 @@ def get_medication():
         except ValueError:
             print('Please enter a number, as suggested.\n')
             continue
-        if value == 0:
+        if value == 1:
             return "Nil"
             break
-        elif value == 1:
+        elif value == 2:
             while True:
                 print("Clenil has been selected.")
-                print("For Clenil 50mcg 2pbd, enter: 1")
-                print("For Clenil 100mcg 1pbd, enter: 2")
-                print("For 8 weeks of Clenil, enter: 3\n")
+                print("1: Clenil 50mcg 2pbd")
+                print("2: Clenil 100mcg 1pbd")
+                print("3: 8 weeks of Clenil\n")
 
                 plan = input("Enter here: ")
                 try:
@@ -323,12 +322,12 @@ def get_medication():
                     medication = "8 weeks of Clenil"
                     break
             break
-        elif value == 2:
+        elif value == 3:
             while True:
                 print("Flixotide has been selected.\n")
-                print("For Flixotide 50mcg 1pbd, enter: 1")
-                print("For Flixotide 50mcg 2pbd, enter: 2")
-                print("For Flixotide 125mcg 2pbd, enter: 3\n")
+                print("1: Flixotide 50mcg 1pbd")
+                print("2: Flixotide 50mcg 2pbd")
+                print("3: Flixotide 125mcg 2pbd\n")
 
                 plan = input("Enter here: ")
                 try:
@@ -346,11 +345,11 @@ def get_medication():
                     medication = "Flixotide 125mcg 2pbd"
                     break
             break
-        elif value == 3:
+        elif value == 4:
             while True:
                 print("Relvar has been selected.\n")
-                print("For Relvar 92mcg, enter: 1")
-                print("For Relvar 184mcg, enter: 2\n")
+                print("1: Relvar 92mcg")
+                print("2: Relvar 184mcg\n")
 
                 plan = input("Enter here: ")
                 try:
@@ -365,13 +364,12 @@ def get_medication():
                     medication = "Relvar 184mcg"
                     break
             break
-        elif value == 4:
+        elif value == 5:
             while True:
                 print("Seretide has been selected.\n")
-                print("For Seretide 50mcg 2pbd, enter: 1")
-                print("For Seretide 100mcg 1pbd, enter: 2")
-                print("For Seretide 125mcg 2pbd, enter: 3\n")
-
+                print("1: Seretide 50mcg 2pbd")
+                print("2: Seretide 100mcg 1pbd")
+                print("3: Seretide 125mcg 2pbd\n")
 
                 plan = input("Enter here: ")
                 try:
@@ -389,13 +387,13 @@ def get_medication():
                     medication = "Seretide 125mcg 2pbd"
                     break
             break
-        elif value == 5:
+        elif value == 6:
             while True:
                 print("Symbicort has been selected.\n")
-                print("For Symbicort MART 100mcg, enter: 1")
-                print("For Symbicort MART 200mcg, enter: 2")
-                print("For Symbicort 100 SMART, enter: 3")
-                print("For Symbicort 100mcg 2pbd, enter: 4\n")
+                print("1: Symbicort MART 100mcg")
+                print("2: Symbicort MART 200mcg")
+                print("3: Symbicort 100 SMART")
+                print("4: Symbicort 100mcg 2pbd\n")
 
 
                 plan = input("Enter here: ")
@@ -417,7 +415,7 @@ def get_medication():
                     medication = "Symbicort 100mcg 2pbd"
                     break
             break
-        elif value == 6:
+        elif value == 7:
             medication = "Qvar 50mcg 2pbd"
             break
         else:
@@ -536,7 +534,7 @@ def main():
     while True:
         print("1: File new data")
         print("2: Retrieve whole data")
-        print("3: Retrieve data from specific surgical practice")
+        print("3: Retrieve data from specific GP surgery")
         print("4: Retrieve medicine data or average ages")
         print("5: Exit program\n")
 
