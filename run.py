@@ -529,6 +529,22 @@ def get_practice_numbers():
     main()
 
 
+def get_referral_numbers():
+    """
+    Provides a list of the number of referral reasons from the whole worksheet
+    """
+    print("Calculating number of referral reasons...\n")
+    practices = SHEET.worksheet("patients").col_values(13)
+    practices.pop(0)
+    a = numpy.array(practices)
+    unique, counts = numpy.unique(a, return_counts=True)
+    my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
+    for key,value in my_dict.items():
+        print("{}: {}\n".format(key,value))
+    print("Data complete!")
+    main()
+
+
 def main():
     """
     Opens main menu which provides access to all program functions
@@ -552,7 +568,7 @@ def main():
             update_patient_data(patient_data)
             break
         elif value == 2:
-            get_practice_numbers()
+            whole_data_menu()
             break
         elif value == 3:
             outcome = "Optimised"
@@ -565,6 +581,36 @@ def main():
             break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
+
+
+def whole_data_menu():
+    """
+    Opens a new menu which provides access to worksheet-wide data.
+    """
+    print("Please specify required data.\n")
+    while True:
+        print("1: Retreive number of children from each practice")
+        print("2: Retrieve number of reasons for referrals")
+        print("3: Retrieve number of children per outcome group")
+        print("4: Retrieve number of children per inhalation device before and after review")
+        print("5: Retrieve number of children: who had recieved allergy testing")
+        print("6: Retreive number of children with an alternative diagnosis\n")
+
+        user_input = input("Enter here: ")
+        try:
+            value = int(user_input)
+        except ValueError:
+            print('Please enter a number, as suggested.\n')
+            continue
+        if value == 1:
+            get_practice_numbers()
+            break
+        elif value == 2:
+            get_referral_numbers()
+            break
+        else:
+            print(f'{user_input} is not one of the available options, please try again.\n')
+
 
 
 print("Welcome to CAC data automation.\n")
