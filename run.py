@@ -525,7 +525,7 @@ def get_practice_numbers():
     my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
     for key,value in my_dict.items():
         print("{}: {}\n".format(key,value))
-        print("Data complete!")
+    print("Data complete!")
     main()
 
 
@@ -550,12 +550,16 @@ def main():
         if value == 1:
             patient_data = get_patient_data()
             update_patient_data(patient_data)
+            break
         elif value == 2:
             get_practice_numbers()
+            break
         elif value == 3:
             outcome = "Optimised"
+            break
         elif value == 4:
             outcome = "Continue"
+            break
         elif value == 5:
             print("Goodbye")
             break
