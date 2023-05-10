@@ -534,33 +534,33 @@ def main():
     Opens main menu which provides access to all program functions
     """
     print("Please request a task by selecting the correct number.\n")
-while True:
-    print("1: File new data")
-    print("2: Retrieve whole data")
-    print("3: Retrieve data from specific surgical practice")
-    print("4: Retrieve medicine data or average ages")
-    print("5: Exit program\n")
+    while True:
+        print("1: File new data")
+        print("2: Retrieve whole data")
+        print("3: Retrieve data from specific surgical practice")
+        print("4: Retrieve medicine data or average ages")
+        print("5: Exit program\n")
 
-    user_input = input("Enter here: ")
-    try:
-        value = int(user_input)
-    except ValueError:
-        print('Please enter a number, as suggested.\n')
-        continue
-    if value == 1:
-        patient_data = get_patient_data()
-        update_patient_data(patient_data)
-    elif value == 2:
-        get_practice_numbers()
-    elif value == 3:
-        outcome = "Optimised"
-    elif value == 4:
-        outcome = "Continue"
-    elif value == 5:
-        print("Goodbye")
-        break
-    else:
-        print(f'{user_input} is not one of the available options, please try again.\n')
+        user_input = input("Enter here: ")
+        try:
+            value = int(user_input)
+        except ValueError:
+            print('Please enter a number, as suggested.\n')
+            continue
+        if value == 1:
+            patient_data = get_patient_data()
+            update_patient_data(patient_data)
+        elif value == 2:
+            get_practice_numbers()
+        elif value == 3:
+            outcome = "Optimised"
+        elif value == 4:
+            outcome = "Continue"
+        elif value == 5:
+            print("Goodbye")
+            break
+        else:
+            print(f'{user_input} is not one of the available options, please try again.\n')
 
 
 print("Welcome to CAC data automation.\n")
