@@ -510,6 +510,7 @@ def update_patient_data(data):
     patient_worksheet = SHEET.worksheet('patients')
     patient_worksheet.append_row(data)
     print("Patient worksheet updated successfully.\n")
+    main()
 
 
 def get_practice_numbers():
@@ -524,17 +525,44 @@ def get_practice_numbers():
     my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
     for key,value in my_dict.items():
         print("{}: {}\n".format(key,value))
-        
+        print("Data complete!")
+    main()
+
 
 def main():
     """
-    Run all program functions
+    Opens main menu which provides access to all program functions
     """
-    patient_data = get_patient_data()
-    update_patient_data(patient_data)
+    print("Please request a task by selecting the correct number.\n")
+while True:
+    print("1: File new data")
+    print("2: Retrieve whole data")
+    print("3: Retrieve data from specific surgical practice")
+    print("4: Retrieve medicine data or average ages")
+    print("5: Exit program\n")
 
+    user_input = input("Enter here: ")
+    try:
+        value = int(user_input)
+    except ValueError:
+        print('Please enter a number, as suggested.\n')
+        continue
+    if value == 1:
+        patient_data = get_patient_data()
+        update_patient_data(patient_data)
+    elif value == 2:
+        get_practice_numbers()
+    elif value == 3:
+        outcome = "Optimised"
+    elif value == 4:
+        outcome = "Continue"
+    elif value == 5:
+        print("Goodbye")
+        break
+    else:
+        print(f'{user_input} is not one of the available options, please try again.\n')
 
 
 print("Welcome to CAC data automation.\n")
-#main()
-get_practice_numbers()
+main()
+
