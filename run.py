@@ -433,7 +433,7 @@ def get_test():
         print("Was allergy testing performed on the patient?\n")
         print("1: Yes")
         print("2: Yes - Adverse reaction")
-        print("3: No")
+        print("3: No\n")
         option = input("Enter here: ")
         if option == "1":
             test = "Yes"
@@ -504,8 +504,9 @@ def update_patient_data(data):
     patient_worksheet = SHEET.worksheet('patients')
     patient_worksheet.append_row(data)
     print("Patient worksheet updated successfully.\n")
-    main()
-
+    go_back = input("To return to the main menu, press enter here: ")
+    if isinstance(go_back, str):
+        main()
 
 def get_numbers(col_num):
     """
@@ -521,7 +522,9 @@ def get_numbers(col_num):
     for key,value in my_dict.items():
         print("{}: {}\n".format(key,value))
     print("Data complete!")
-    main()
+    go_back = input("To return to the main menu, press enter here: ")
+    if isinstance(go_back, str):
+        main()
 
 
 
