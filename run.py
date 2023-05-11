@@ -506,6 +506,7 @@ def update_patient_data(data):
     if isinstance(go_back, str):
         main()
 
+
 def get_numbers(col_num):
     """
     Provides a list of data specified by the user from the whole database.
@@ -587,9 +588,10 @@ def main():
                 surgery = input("Enter GP surgery here: ")
                 if surgery.title() in SHEET.col_values(5):
                     data_menu(surgery.title())
+                    break
                 else:
-                    print(f'{surgery} is not in the list of existing surgeries. Please ensure spelling is correct\n')
-                break
+                    print(f'{surgery.title()} is not in the list of existing surgeries. Please ensure spelling is correct\n')
+            break
         elif value == 4:
             outcome = "Continue"
             break
