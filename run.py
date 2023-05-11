@@ -508,7 +508,7 @@ def update_patient_data(data):
 
 def get_numbers(col_num):
     """
-    Provides a list of the number of children referred from each practice.
+    Provides a list of data specified by the user from the whole database.
     """
     print("Calculating number of patients from each practice...\n")
     columns = SHEET.col_values(col_num)
@@ -523,6 +523,37 @@ def get_numbers(col_num):
     go_back = input("To return to the main menu, press enter here: ")
     if isinstance(go_back, str):
         main()
+
+
+
+def get_surgery_numbers(requested_surgery, col_num):
+    """
+    Provides a list of data specified by the user from a particular surgery.
+    """
+    print(f"Calculating number of patients from  {requested_surgery}...\n")
+    surgery_column = SHEET.col_values(5)
+    surgery_column.pop(0)
+    surgery_array = numpy.array(surgery_column)
+    requested_surgery_indices = numpy.where(surgery_array == requested_surgery)[0]
+    columns = SHEET.col_values(col_num)
+    columns.pop(0)
+    a = numpy.array(columns)
+    old_list = [a[x] for x in requested_surgery_indices]
+    new_list = [x for x in old_list if x != ""]
+    if new_list == []:
+        print(f"{requested_surgery} has no data of this type.")
+        go_back = input("To return to the main menu, press enter here: ")
+        if isinstance(go_back, str):
+            main()
+    else:
+        unique, counts = numpy.unique(new_list, return_counts=True)
+        my_dict = (dict(zip(unique, counts))) 
+        for key,value in my_dict.items():
+            print("{}: {}\n".format(key,value))
+        print("Data complete!")
+        go_back = input("To return to the main menu, press enter here: ")
+        if isinstance(go_back, str):
+            main()
 
 
 
@@ -549,11 +580,16 @@ def main():
             update_patient_data(patient_data)
             break
         elif value == 2:
-            data_menu()
+            data_menu("")
             break
         elif value == 3:
-            data_menu(input("Enter GP surgery here: "))
-            break
+            while True:
+                surgery = input("Enter GP surgery here: ")
+                if surgery.title() in SHEET.col_values(5):
+                    data_menu(surgery.title())
+                else:
+                    print(f'{surgery} is not in the list of existing surgeries. Please ensure spelling is correct\n')
+                break
         elif value == 4:
             outcome = "Continue"
             break
@@ -564,20 +600,24 @@ def main():
             print(f'{user_input} is not one of the available options, please try again.\n')
 
 
-def data_menu():
+def data_menu(surgery):
     """
     Opens a new menu which provides access to worksheet-wide data.
     """
-    
+    if surgery != "":
+        print(f"Getting {surgery.title()} data")
     print("Please specify required data.\n")
     while True:
-        print("1: Retreive number of children from each practice")
-        print("2: Retrieve number of reasons for referrals")
-        print("3: Retrieve number of children per outcome group")
-        print("4: Retrieve number of children per inhalation device at referral")
-        print("5: Retrieve number of children per inhalation device after review")
-        print("6: Retrieve number of children: who had recieved allergy testing")
-        print("7: Retreive number of children with an alternative diagnosis\n")
+        print("1: Retrieve number of reasons for referrals")
+        print("2: Retrieve number of children per outcome group")
+        print("3: Retrieve number of children per inhalation device at referral")
+        print("4: Retrieve number of children per inhalation device after review")
+        print("5: Retrieve number of children: who had recieved allergy testing")
+        if surgery == "":
+            print("6: Retreive number of children with an alternative diagnosis")
+            print("7: Retreive number of children from each practice\n")
+        else:
+            print("6: Retreive number of children with an alternative diagnosis\n")
 
         user_input = input("Enter here: ")
         try:
@@ -585,26 +625,44 @@ def data_menu():
         except ValueError:
             print('Please enter a number, as suggested.\n')
             continue
-        if value == 1:
-            get_numbers(5)
-            break
-        elif value == 2:
+        if value == 1 and surgery == "":
             get_numbers(13)
             break
-        elif value == 3:
+        elif value == 2 and surgery == "":
             get_numbers(8)
             break
-        elif value == 4:
+        elif value == 3 and surgery == "":
             get_numbers(11)
             break
-        elif value == 5:
+        elif value == 4 and surgery == "":
             get_numbers(7)
             break
-        elif value == 6:
+        elif value == 5 and surgery == "":
             get_numbers(12)
             break
-        elif value == 7:
+        elif value == 6 and surgery == "":
             get_numbers(9)
+            break
+        elif value == 7 and surgery == "":
+            get_numbers(5)
+            break
+        elif value == 1 and surgery != "":
+            get_surgery_numbers(surgery, 13)
+            break
+        elif value == 2 and surgery != "":
+            get_surgery_numbers(surgery, 8)
+            break
+        elif value == 3 and surgery != "":
+            get_surgery_numbers(surgery, 11)
+            break
+        elif value == 4 and surgery != "":
+            get_surgery_numbers(surgery, 7)
+            break
+        elif value == 5 and surgery != "":
+            get_surgery_numbers(surgery, 12)
+            break
+        elif value == 6 and surgery != "":
+            get_surgery_numbers(surgery, 9)
             break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
@@ -613,5 +671,3 @@ def data_menu():
 
 print("Welcome to CAC data automation.\n")
 main()
-
-
