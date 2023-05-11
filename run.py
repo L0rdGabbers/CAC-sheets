@@ -14,7 +14,7 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet')
+SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet').worksheet("patients")
 
 
 def get_patient_data():
@@ -80,7 +80,7 @@ def determine_id_num():
     Counts the number of patients already in the data sheet and
     automatically assigns a new patient id number to the patient.
     """
-    worksheet = SHEET.worksheet('patients')
+    worksheet = SHEET
     rows = len(worksheet.get_all_values()) #This counts the number of rows with data, including the headers. It already equals the number of the next patient.
     return rows
 
@@ -499,7 +499,7 @@ def update_patient_data(data):
     Updates patient worksheet, and adds new row with the data provided
     """
     print("Updating patient worksheet...")
-    patient_worksheet = SHEET.worksheet('patients')
+    patient_worksheet = SHEET
     patient_worksheet.append_row(data)
     print("Patient worksheet updated successfully.\n")
     go_back = input("To return to the main menu, press enter here: ")
@@ -511,10 +511,10 @@ def get_numbers(col_num):
     Provides a list of the number of children referred from each practice.
     """
     print("Calculating number of patients from each practice...\n")
-    practices = SHEET.worksheet("patients").col_values(col_num)
-    practices.pop(0)
-    practices = [x for x in practices if x != ""]
-    a = numpy.array(practices)
+    columns = SHEET.col_values(col_num)
+    columns.pop(0)
+    columns = [x for x in columns if x != ""]
+    a = numpy.array(columns)
     unique, counts = numpy.unique(a, return_counts=True)
     my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
     for key,value in my_dict.items():
@@ -549,10 +549,10 @@ def main():
             update_patient_data(patient_data)
             break
         elif value == 2:
-            whole_data_menu()
+            data_menu()
             break
         elif value == 3:
-            outcome = "Optimised"
+            data_menu(input("Enter GP surgery here: "))
             break
         elif value == 4:
             outcome = "Continue"
@@ -564,10 +564,11 @@ def main():
             print(f'{user_input} is not one of the available options, please try again.\n')
 
 
-def whole_data_menu():
+def data_menu():
     """
     Opens a new menu which provides access to worksheet-wide data.
     """
+    
     print("Please specify required data.\n")
     while True:
         print("1: Retreive number of children from each practice")
@@ -612,4 +613,5 @@ def whole_data_menu():
 
 print("Welcome to CAC data automation.\n")
 main()
+
 
