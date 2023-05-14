@@ -534,14 +534,14 @@ def get_specific_numbers(specification, col_num):
     or whether they wish to examine a particular referral reason.
     """
     if specification == "Poor control" or specification == "Diagnostic testing":
-        print(f"Calculating medicine numbers of children on {specification}.")
+        print(f"Calculating medicine numbers of children on {specification.lower()}.\n")
         specific_column = SHEET.col_values(13)
     else:
         print(f"Calculating number of patients from  {specification}...\n")
         specific_column = SHEET.col_values(5)
     specific_column.pop(0)
-    specific_array = numpy.array(surgery_column)
-    specification_indices = numpy.where(surgery_array == specification)[0]
+    specific_array = numpy.array(specific_column)
+    specification_indices = numpy.where(specific_array == specification)[0]
     columns = SHEET.col_values(col_num)
     columns.pop(0)
     a = numpy.array(columns)
@@ -696,6 +696,14 @@ def med_menu():
         if value == 1:
             get_numbers(10)
             break
+        if value == 2:
+            get_specific_numbers("Poor control", 10)
+            break
+        if value == 3:
+            get_specific_numbers("Diagnostic testing", 10)
+            break
+        else :
+            print(f'{user_input} is not one of the available options, please try again.\n')
 
 
 
