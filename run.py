@@ -511,7 +511,7 @@ def get_numbers(col_num):
     """
     Provides a list of data specified by the user from the whole database.
     """
-    print("Calculating number of patients from each practice...\n")
+    print("Calculating number of patients...\n")
     columns = SHEET.col_values(col_num)
     columns.pop(0)
     columns = [x for x in columns if x != ""]
@@ -527,22 +527,24 @@ def get_numbers(col_num):
 
 
 
-def get_surgery_numbers(requested_surgery, col_num):
+def get_specific_numbers(specification, col_num):
     """
-    Provides a list of data specified by the user from a particular surgery.
+    Provides a specific list of data based on whether
+    the user from a particular surgery wishes to examine a particular surgery
+    or whether they wish to examine a particular referral reason.
     """
-    print(f"Calculating number of patients from  {requested_surgery}...\n")
+    print(f"Calculating number of patients from  {specification}...\n")
     surgery_column = SHEET.col_values(5)
     surgery_column.pop(0)
     surgery_array = numpy.array(surgery_column)
-    requested_surgery_indices = numpy.where(surgery_array == requested_surgery)[0]
+    specification_indices = numpy.where(surgery_array == specification)[0]
     columns = SHEET.col_values(col_num)
     columns.pop(0)
     a = numpy.array(columns)
-    old_list = [a[x] for x in requested_surgery_indices]
+    old_list = [a[x] for x in specification_indices]
     new_list = [x for x in old_list if x != ""]
     if new_list == []:
-        print(f"{requested_surgery} has no data of this type.")
+        print(f"{specification} has no data of this type.")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
@@ -593,7 +595,7 @@ def main():
                     print(f'{surgery.title()} is not in the list of existing surgeries. Please ensure spelling is correct\n')
             break
         elif value == 4:
-            outcome = "Continue"
+            med_menu()
             break
         elif value == 5:
             print("Goodbye")
@@ -649,25 +651,48 @@ def data_menu(surgery):
             get_numbers(5)
             break
         elif value == 1 and surgery != "":
-            get_surgery_numbers(surgery, 13)
+            get_specific_numbers(surgery, 13)
             break
         elif value == 2 and surgery != "":
-            get_surgery_numbers(surgery, 8)
+            get_specific_numbers(surgery, 8)
             break
         elif value == 3 and surgery != "":
-            get_surgery_numbers(surgery, 11)
+            get_specific_numbers(surgery, 11)
             break
         elif value == 4 and surgery != "":
-            get_surgery_numbers(surgery, 7)
+            get_specific_numbers(surgery, 7)
             break
         elif value == 5 and surgery != "":
-            get_surgery_numbers(surgery, 12)
+            get_specific_numbers(surgery, 12)
             break
         elif value == 6 and surgery != "":
-            get_surgery_numbers(surgery, 9)
+            get_specific_numbers(surgery, 9)
             break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
+
+
+def med_menu():
+    """
+    Opens a new menu which provides access to average age and medicine data.
+    """
+    print("Please specify required data.\n")
+    while True:
+        print("1: Retrieve number of children on each medicine")
+        print("2: Retrieve medicine numbers of children on poor control")
+        print("3: Retrieve medicine numbers of children on diagnostic testing")
+        print("4: Retrieve average age of children on poor control")
+        print("5: Retrieve average age of children on diagnostic testing\n")
+        user_input = input("Enter here: ")
+        try:
+            value = int(user_input)
+        except ValueError:
+            print('Please enter a number, as suggested.\n')
+            continue
+        if value == 1:
+            get_numbers(10)
+            break
+
 
 
 
