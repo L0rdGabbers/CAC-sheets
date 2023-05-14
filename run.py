@@ -563,7 +563,7 @@ def get_specific_numbers(specification, col_num):
             main()
 
 
-def calculate_average_age():
+def calculate_average_age(specification):
     """
     Determines the average age of all patients, 
     or average age of patients based upon user's specified referral reason.
@@ -573,10 +573,37 @@ def calculate_average_age():
     dor_col = SHEET.col_values(3)
     dob_col.pop(0)
     dor_col.pop(0)
-    for x, y in zip(dob_col, dor_col):
-        age = get_age_in_months(x, y)
-        ages_in_months.append(age)
-    print(ages_in_months)
+    if specification == "":
+        for x, y in zip(dob_col, dor_col):
+            age = get_age_in_months(x, y)
+            ages_in_months.append(age)
+        average_months = round(numpy.average(ages_in_months))
+        years = average_months // 12
+        months = average_months % 12
+        print(f"The average age of all patients is {years} years and {months} months\n")
+        go_back = input("To return to the main menu, press enter here: ")
+        if isinstance(go_back, str):
+            main()
+    else:
+        specific_column = SHEET.col_values(13)
+        specific_column.pop(0)
+        specific_array = numpy.array(specific_column)
+        specification_indices = numpy.where(specific_array == specification)[0]
+        dates_of_birth = numpy.array(dob_col)
+        dates_of_referral = numpy.array(dor_col)
+        first_list = [dates_of_birth[x] for x in specification_indices]
+        second_list = [dates_of_referral[x] for x in specification_indices]
+        for x, y in zip(first_list, second_list):
+            age = get_age_in_months(x, y)
+            ages_in_months.append(age)
+        average_months = round(numpy.average(ages_in_months))
+        years = average_months // 12
+        months = average_months % 12
+        print(f"The average age of all patients on {specification.lower()} is {years} years and {months} months\n")
+        go_back = input("To return to the main menu, press enter here: ")
+        if isinstance(go_back, str):
+            main()
+            
 
 def get_age_in_months(d1, d2):
     date1 = datetime.strptime(str(d1), '%m/%d/%Y') 
@@ -704,11 +731,12 @@ def med_menu():
     """
     print("Please specify required data.\n")
     while True:
-        print("1: Retrieve number of children on each medicine")
-        print("2: Retrieve medicine numbers of children on poor control")
-        print("3: Retrieve medicine numbers of children on diagnostic testing")
-        print("4: Retrieve average age of children on poor control")
-        print("5: Retrieve average age of children on diagnostic testing\n")
+        print("1: Retrieve number of patients on each medicine")
+        print("2: Retrieve medicine numbers of patients on poor control")
+        print("3: Retrieve medicine numbers of patients on diagnostic testing")
+        print("4: Retrieve average of all patients")
+        print("5: Retrieve average age of patients on poor control")
+        print("6: Retrieve average age of patients on diagnostic testing\n")
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
@@ -724,6 +752,15 @@ def med_menu():
         if value == 3:
             get_specific_numbers("Diagnostic testing", 10)
             break
+        if value == 4:
+            calculate_average_age("")
+            break
+        if value == 5:
+            calculate_average_age("Poor control")
+            break
+        if value == 6:
+            calculate_average_age("Diagnostic testing")
+            break
         else :
             print(f'{user_input} is not one of the available options, please try again.\n')
 
@@ -731,5 +768,4 @@ def med_menu():
 
 
 print("Welcome to CAC data automation.\n")
-#main()
-calculate_average_age()
+main()
