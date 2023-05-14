@@ -563,6 +563,28 @@ def get_specific_numbers(specification, col_num):
             main()
 
 
+def calculate_average_age():
+    """
+    Determines the average age of all patients, 
+    or average age of patients based upon user's specified referral reason.
+    """
+    ages_in_months = []
+    dob_col = SHEET.col_values(2)
+    dor_col = SHEET.col_values(3)
+    dob_col.pop(0)
+    dor_col.pop(0)
+    for x, y in zip(dob_col, dor_col):
+        age = get_age_in_months(x, y)
+        ages_in_months.append(age)
+    print(ages_in_months)
+
+def get_age_in_months(d1, d2):
+    date1 = datetime.strptime(str(d1), '%m/%d/%Y') 
+    date2 = datetime.strptime(str(d2), '%m/%d/%Y')
+    r = relativedelta.relativedelta(date2, date1)
+    months = r.months + (12 * r.years)
+    return months
+
 
 def main():
     """
@@ -709,4 +731,5 @@ def med_menu():
 
 
 print("Welcome to CAC data automation.\n")
-main()
+#main()
+calculate_average_age()
