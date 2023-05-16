@@ -48,14 +48,8 @@ def get_patient_data():
 
     outcome = get_outcome()
     data.append(outcome)
-    comment = ""
-    if outcome == "Alternative diagnosis":
-        while True:
-            comment = input("Please detail alternative diagnosis here: ")
-            if comment == "":
-                print("You haven't entered anything, and an alternative diagnosis is required.\n")
-            else:
-                break
+
+    comment = get_comment(outcome)
     data.append(comment)
 
     medication = get_medication()
@@ -232,7 +226,6 @@ def get_outcome():
     and the outcome and the comment will be returned together as one cell.
     """
     outcome = ""
-    comment = ""
     print("Please provide patient outcome by entering matching number\n")
     while True:
         print("1: Commence treatment")
@@ -268,9 +261,24 @@ def get_outcome():
             break
         else:
             print(f'{user_input} is not one of the available options, please try again.\n')
-    return (f'{outcome}' + f'{comment}')
+    return outcome
 
 
+def get_comment(outcome):
+    """
+    Requests details regarding the patient's alternative diagnosis
+    from the user, based on whether the patient outcome.
+    """
+    comment = ""
+    if outcome == "Alternative diagnosis":
+        while True:
+            comment = input("Please detail alternative diagnosis here: ")
+            if comment == "":
+                print("You haven't entered anything, and an alternative diagnosis is required.\n")
+            else:
+                break
+    return comment
+        
 
 def get_medication():
     """
