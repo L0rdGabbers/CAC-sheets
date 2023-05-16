@@ -76,9 +76,9 @@ def determine_id_num():
     automatically assigns a new patient id number to the patient.
     """
     worksheet = SHEET
-    return len(worksheet.get_all_values()) 
-    #This counts the number of rows with data, including the headers. 
-    #It already equals the number of the next patient.
+    return len(worksheet.get_all_values())
+    # This counts the number of rows with data, including the headers.
+    # It already equals the number of the next patient.
 
 
 def get_date(date_type):
@@ -102,8 +102,8 @@ def get_date(date_type):
 
 def validate_date(date):
     """
-    Inside the try, confirms whether string values follow the mm/dd/yyyy format.
-    Raises ValueError, if string does not follow this format.
+    Inside the try, confirms whether string values follow the
+    mm/dd/yyyy format. Raises ValueError, if string does not follow format.
     """
     try:
         valid_date = time.strptime(date, '%m/%d/%Y')
@@ -111,20 +111,19 @@ def validate_date(date):
         print(
             f'Invalid: {date} is not in MM/DD/YYYY format, try again.\n')
         return False
-    
     return True
 
 
-def determine_age(d1,d2):
+def determine_age(d1, d2):
     """
-    Calculates the age of the child on the date of the referral in the 
+    Calculates the age of the child on the date of the referral in the
     #y#m format.
     """
-    date1 = datetime.strptime(str(d1), '%m/%d/%Y') 
+    date1 = datetime.strptime(str(d1), '%m/%d/%Y')
     date2 = datetime.strptime(str(d2), '%m/%d/%Y')
     time_diff = relativedelta.relativedelta(date2, date1)
     return f"{time_diff.years}y{time_diff.months}m"
-    # This code was able to be created thanks to Thayif Kabir on 
+    # This code was able to be created thanks to Thayif Kabir on
     # https://stackoverflow.com/questions/56911490/calculate-the-months-between-two-dates
 
 
@@ -218,7 +217,7 @@ def get_device(review):
 
 def get_outcome():
     """
-    Requests patient outcome by providing a number of options 
+    Requests patient outcome by providing a number of options
     selected by a number. Once entered, the input is then validated.
     Should the answer require a comment, this option will be provided
     and the outcome and the comment will be returned together as one cell.
@@ -276,7 +275,7 @@ def get_comment(outcome):
             else:
                 break
     return comment
-        
+
 
 def get_medication():
     """
@@ -515,9 +514,10 @@ def get_numbers(col_num):
     columns = [x for x in columns if x != ""]
     data = numpy.array(columns)
     unique, counts = numpy.unique(data, return_counts=True)
-    my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
-    for key,value in my_dict.items():
-        print("{}: {}\n".format(key,value))
+    my_dict = (dict(zip(unique, counts)))
+    # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
+    for key, value in my_dict.items():
+        print("{}: {}\n".format(key, value))
     print("Data complete!")
     go_back = input("To return to the main menu, press enter here: ")
     if isinstance(go_back, str):
@@ -551,9 +551,9 @@ def get_specific_numbers(specification, col_num):
             main()
     else:
         unique, counts = numpy.unique(new_list, return_counts=True)
-        my_dict = (dict(zip(unique, counts))) 
-        for key,value in my_dict.items():
-            print("{}: {}\n".format(key,value))
+        my_dict = (dict(zip(unique, counts)))
+        for key, value in my_dict.items():
+            print("{}: {}\n".format(key, value))
         print("Data complete!")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
@@ -562,7 +562,7 @@ def get_specific_numbers(specification, col_num):
 
 def calculate_average_age(specification):
     """
-    Determines the average age of all patients, 
+    Determines the average age of all patients,
     or average age of patients based upon user's specified referral reason.
     """
     ages_in_months = []
@@ -597,14 +597,14 @@ def calculate_average_age(specification):
         y = average_months // 12
         m = average_months % 12
         print(
-            f"Average age of patients on {specification.lower()} is {y}y{m}m\n")
+            f"{specification} patient average age is {y}y{m}m\n")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
-            
+
 
 def get_age_in_months(d1, d2):
-    date1 = datetime.strptime(str(d1), '%m/%d/%Y') 
+    date1 = datetime.strptime(str(d1), '%m/%d/%Y')
     date2 = datetime.strptime(str(d2), '%m/%d/%Y')
     age_diff = relativedelta.relativedelta(date2, date1)
     months = age_diff.months + (12 * age_diff.years)
@@ -667,7 +667,7 @@ def data_menu(surgery):
         print(
             "3: Retrieve number of children per inhalation device at referral")
         print(
-            "4: Retrieve number of children per inhalation device after review")
+            "4: Retrieve number of children per inhalation device post review")
         print(
             "5: Retrieve number of children: who had recieved allergy testing")
         if surgery == "":
@@ -762,10 +762,8 @@ def med_menu():
         if value == 6:
             calculate_average_age("Diagnostic testing")
             break
-        else :
+        else:
             print(f'{user_input} is not one of the options, try again.\n')
-
-
 
 
 print("Welcome to CAC data automation.\n")
