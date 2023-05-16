@@ -575,9 +575,9 @@ def calculate_average_age(specification):
             age = get_age_in_months(x, y)
             ages_in_months.append(age)
         average_months = round(numpy.average(ages_in_months))
-        years = average_months // 12
-        months = average_months % 12
-        print(f"Average age of all patients is {years}y{months}m\n")
+        y = average_months // 12
+        m = average_months % 12
+        print(f"Average age of all patients is {y}y{m}m\n")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
