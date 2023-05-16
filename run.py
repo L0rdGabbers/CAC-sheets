@@ -536,7 +536,7 @@ def get_specific_numbers(specification, col_num):
     data = numpy.array(columns)
     old_list = [data[x] for x in specification_indices]
     new_list = [x for x in old_list if x != ""]
-    if new_list == False:
+    if new_list == []:
         print(f"{specification} has no data of this type.")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
@@ -663,7 +663,6 @@ def data_menu(surgery):
             print("7: Retreive number of children from each practice\n")
         else:
             print("6: Retreive number of children with an alternative diagnosis\n")
-
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
