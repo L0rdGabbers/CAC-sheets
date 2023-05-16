@@ -69,14 +69,15 @@ def get_patient_data():
 
     return data
 
+
 def determine_id_num():
     """
     Counts the number of patients already in the data sheet and
     automatically assigns a new patient id number to the patient.
     """
     worksheet = SHEET
-    rows = len(worksheet.get_all_values()) #This counts the number of rows with data, including the headers. It already equals the number of the next patient.
-    return rows
+    return len(worksheet.get_all_values()) #This counts the number of rows with data, including the headers. It already equals the number of the next patient.
+
 
 def get_date(date_type):
     """
@@ -118,10 +119,8 @@ def determine_age(d1,d2):
     """
     date1 = datetime.strptime(str(d1), '%m/%d/%Y') #This code was able to be created thanks to Thayif Kabir on https://stackoverflow.com/questions/56911490/calculate-the-months-between-two-dates
     date2 = datetime.strptime(str(d2), '%m/%d/%Y')
-    r = relativedelta.relativedelta(date2, date1)
-    months = r.months
-    years = r.years
-    return f"{years}y{months}m"
+    time_diff = relativedelta.relativedelta(date2, date1)
+    return f"{time_diff.years}y{time_diff.months}m"
 
 
 def get_surgery():
@@ -142,8 +141,6 @@ def get_referrer():
     print("Example: For John Smith, enter JS\n")
     user_input = input("Enter referrer here: ")
     return user_input.upper()
-
-
 
 
 def get_device(review):
@@ -168,9 +165,6 @@ def get_device(review):
             print("6: Breath actuated")
             print("7: No spacer")
             print("8: Other\n")
-
-
-
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
@@ -217,7 +211,6 @@ def get_device(review):
             print(f'{user_input} is not one of the available options, please try again.\n')
 
 
-
 def get_outcome():
     """
     Requests patient outcome by providing a number of options 
@@ -234,7 +227,6 @@ def get_outcome():
         print("4: Continue")
         print("5: Alternative Diagnosis")
         print("6: Discontinue treatment\n")
-
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
@@ -283,7 +275,7 @@ def get_comment(outcome):
 def get_medication():
     """
     Requests patient's medication after review
-    by providing a number of options selected by a number.
+    by providing a number of optins selected by a number.
     Once entered, the input is then validated.
     """
     medication = ""
@@ -296,8 +288,6 @@ def get_medication():
         print("5: Seretide")
         print("6: Symbicort")
         print("7: Qvar\n")
-
-
         drug = input("Enter here: ")
         try:
             value = int(drug)
@@ -313,7 +303,6 @@ def get_medication():
                 print("1: Clenil 50mcg 2pbd")
                 print("2: Clenil 100mcg 1pbd")
                 print("3: 8 weeks of Clenil\n")
-
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
@@ -336,7 +325,6 @@ def get_medication():
                 print("1: Flixotide 50mcg 1pbd")
                 print("2: Flixotide 50mcg 2pbd")
                 print("3: Flixotide 125mcg 2pbd\n")
-
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
@@ -358,7 +346,6 @@ def get_medication():
                 print("Relvar has been selected.\n")
                 print("1: Relvar 92mcg")
                 print("2: Relvar 184mcg\n")
-
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
@@ -378,7 +365,6 @@ def get_medication():
                 print("1: Seretide 50mcg 2pbd")
                 print("2: Seretide 100mcg 1pbd")
                 print("3: Seretide 125mcg 2pbd\n")
-
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
@@ -402,8 +388,6 @@ def get_medication():
                 print("2: Symbicort MART 200mcg")
                 print("3: Symbicort 100 SMART")
                 print("4: Symbicort 100mcg 2pbd\n")
-
-
                 plan = input("Enter here: ")
                 try:
                     value2 = int(plan)
@@ -464,7 +448,6 @@ def get_reason():
         print("What was the reason for referral?\n")
         print("For Poor control, enter: 1")
         print("For Diagnostic testing, enter: 2\n")
-
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
@@ -507,8 +490,7 @@ def update_patient_data(data):
     Updates patient worksheet, and adds new row with the data provided
     """
     print("Updating patient worksheet...")
-    patient_worksheet = SHEET
-    patient_worksheet.append_row(data)
+    SHEET.append_row(data)
     print("Patient worksheet updated successfully.\n")
     go_back = input("To return to the main menu, press enter here: ")
     if isinstance(go_back, str):
@@ -523,8 +505,8 @@ def get_numbers(col_num):
     columns = SHEET.col_values(col_num)
     columns.pop(0)
     columns = [x for x in columns if x != ""]
-    a = numpy.array(columns)
-    unique, counts = numpy.unique(a, return_counts=True)
+    data = numpy.array(columns)
+    unique, counts = numpy.unique(data, return_counts=True)
     my_dict = (dict(zip(unique, counts))) # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
     for key,value in my_dict.items():
         print("{}: {}\n".format(key,value))
@@ -532,7 +514,6 @@ def get_numbers(col_num):
     go_back = input("To return to the main menu, press enter here: ")
     if isinstance(go_back, str):
         main()
-
 
 
 def get_specific_numbers(specification, col_num):
@@ -552,10 +533,10 @@ def get_specific_numbers(specification, col_num):
     specification_indices = numpy.where(specific_array == specification)[0]
     columns = SHEET.col_values(col_num)
     columns.pop(0)
-    a = numpy.array(columns)
-    old_list = [a[x] for x in specification_indices]
+    data = numpy.array(columns)
+    old_list = [data[x] for x in specification_indices]
     new_list = [x for x in old_list if x != ""]
-    if new_list == []:
+    if new_list == False:
         print(f"{specification} has no data of this type.")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
@@ -616,8 +597,8 @@ def calculate_average_age(specification):
 def get_age_in_months(d1, d2):
     date1 = datetime.strptime(str(d1), '%m/%d/%Y') 
     date2 = datetime.strptime(str(d2), '%m/%d/%Y')
-    r = relativedelta.relativedelta(date2, date1)
-    months = r.months + (12 * r.years)
+    age_diff = relativedelta.relativedelta(date2, date1)
+    months = age_diff.months + (12 * age_diff.years)
     return months
 
 
@@ -632,7 +613,6 @@ def main():
         print("3: Retrieve data from specific GP surgery")
         print("4: Retrieve medicine data or average ages")
         print("5: Exit program\n")
-
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
