@@ -20,7 +20,7 @@ SHEET = GSPREAD_CLIENT.open('allergy_spreadsheet').worksheet("patients")
 def get_patient_data():
     """
     Collects a range of data of varying types by calling a number of functions
-    before appending them to a list called data to be appended to the spreadsheet.
+    before appending them to a listto be appended to the spreadsheet.
     """
     print("Collecting new patient data.\n")
     data = []
@@ -76,7 +76,9 @@ def determine_id_num():
     automatically assigns a new patient id number to the patient.
     """
     worksheet = SHEET
-    return len(worksheet.get_all_values()) #This counts the number of rows with data, including the headers. It already equals the number of the next patient.
+    return len(worksheet.get_all_values()) 
+    #This counts the number of rows with data, including the headers. 
+    #It already equals the number of the next patient.
 
 
 def get_date(date_type):
@@ -106,7 +108,8 @@ def validate_date(date):
     try:
         valid_date = time.strptime(date, '%m/%d/%Y')
     except ValueError:
-        print(f'Invalid date: {date} does not match the MM/DD/YYYY format, please try again\n')
+        print(
+            f'Invalid: {date} is not in MM/DD/YYYY format, try again.\n')
         return False
     
     return True
@@ -117,10 +120,12 @@ def determine_age(d1,d2):
     Calculates the age of the child on the date of the referral in the 
     #y#m format.
     """
-    date1 = datetime.strptime(str(d1), '%m/%d/%Y') #This code was able to be created thanks to Thayif Kabir on https://stackoverflow.com/questions/56911490/calculate-the-months-between-two-dates
+    date1 = datetime.strptime(str(d1), '%m/%d/%Y') 
     date2 = datetime.strptime(str(d2), '%m/%d/%Y')
     time_diff = relativedelta.relativedelta(date2, date1)
     return f"{time_diff.years}y{time_diff.months}m"
+    # This code was able to be created thanks to Thayif Kabir on 
+    # https://stackoverflow.com/questions/56911490/calculate-the-months-between-two-dates
 
 
 def get_surgery():
@@ -149,7 +154,7 @@ def get_device(review):
     by providing a number of options selected by a number.
     Once entered, the input is then validated.
     """
-    print(f"Please provide patient's inhaler device {review} review by entering matching number\n")
+    print(f"Please provide number matching inhaler device {review} review.\n")
     while True:
         if review == "after":
             print("1: Nil")
@@ -208,7 +213,7 @@ def get_device(review):
             return input("Please detail inhaler device here: ")
             break
         else:
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
 
 
 def get_outcome():
@@ -252,7 +257,7 @@ def get_outcome():
             outcome = "Discontinue treatment"
             break
         else:
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
     return outcome
 
 
@@ -266,7 +271,8 @@ def get_comment(outcome):
         while True:
             comment = input("Please detail alternative diagnosis here: ")
             if comment == "":
-                print("You haven't entered anything, and an alternative diagnosis is required.\n")
+                print(
+                    "An alternative diagnosis is required.\n")
             else:
                 break
     return comment
@@ -279,7 +285,8 @@ def get_medication():
     Once entered, the input is then validated.
     """
     medication = ""
-    print("Please provide patient's medication after review by entering matching number\n")
+    print(
+        "Please provide medication after review by entering matching number\n")
     while True:
         print("1: Nil")
         print("2: Clenil")
@@ -411,13 +418,14 @@ def get_medication():
             medication = "Qvar 50mcg 2pbd"
             break
         else:
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
     return medication
 
 
 def get_test():
     """
-    Requests information on whether allergy testing was performed on the patient.
+    Requests information on whether allergy testing
+    was performed on the patient.
     """
     while True:
         print("Was allergy testing performed on the patient?\n")
@@ -435,7 +443,7 @@ def get_test():
             test = "No"
             break
         else:
-            print(f'{option} is not one of the available options, please enter y or n\n')
+            print(f'{option} is not one of the options, please enter y or n\n')
     return test
 
 
@@ -461,7 +469,7 @@ def get_reason():
             reason = "Diagnostic testing"
             break
         else:
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
     return reason
 
 
@@ -480,7 +488,7 @@ def get_note():
         elif option == "n":
             break
         else:
-            print(f'{option} is not one of the available options, please enter y or n\n')
+            print(f'{option} is not one of the options, please enter y or n\n')
         break
     return note
 
@@ -523,7 +531,7 @@ def get_specific_numbers(specification, col_num):
     or whether they wish to examine a particular referral reason.
     """
     if specification == "Poor control" or specification == "Diagnostic testing":
-        print(f"Calculating medicine numbers of children on {specification.lower()}.\n")
+        print(f"Calculating numbers of children on {specification.lower()}.\n")
         specific_column = SHEET.col_values(13)
     else:
         print(f"Calculating number of patients from  {specification}...\n")
@@ -569,7 +577,7 @@ def calculate_average_age(specification):
         average_months = round(numpy.average(ages_in_months))
         years = average_months // 12
         months = average_months % 12
-        print(f"The average age of all patients is {years} years and {months} months\n")
+        print(f"Average age of all patients is {years}y{months}m\n")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
@@ -586,9 +594,10 @@ def calculate_average_age(specification):
             age = get_age_in_months(x, y)
             ages_in_months.append(age)
         average_months = round(numpy.average(ages_in_months))
-        years = average_months // 12
-        months = average_months % 12
-        print(f"The average age of all patients on {specification.lower()} is {years} years and {months} months\n")
+        y = average_months // 12
+        m = average_months % 12
+        print(
+            f"Average age of patients on {specification.lower()} is {y}y{m}m\n")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
@@ -633,7 +642,7 @@ def main():
                     data_menu(surgery.title())
                     break
                 else:
-                    print(f'{surgery.title()} is not in the list of existing surgeries. Please ensure spelling is correct\n')
+                    print(f'{surgery.title()} is not in the list. \n')
             break
         elif value == 4:
             med_menu()
@@ -642,7 +651,7 @@ def main():
             print("Goodbye")
             break
         else:
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
 
 
 def data_menu(surgery):
@@ -655,14 +664,19 @@ def data_menu(surgery):
     while True:
         print("1: Retrieve number of reasons for referrals")
         print("2: Retrieve number of children per outcome group")
-        print("3: Retrieve number of children per inhalation device at referral")
-        print("4: Retrieve number of children per inhalation device after review")
-        print("5: Retrieve number of children: who had recieved allergy testing")
+        print(
+            "3: Retrieve number of children per inhalation device at referral")
+        print(
+            "4: Retrieve number of children per inhalation device after review")
+        print(
+            "5: Retrieve number of children: who had recieved allergy testing")
         if surgery == "":
-            print("6: Retreive number of children with an alternative diagnosis")
+            print(
+                "6: Retreive number of children with an alternative diagnosis")
             print("7: Retreive number of children from each practice\n")
         else:
-            print("6: Retreive number of children with an alternative diagnosis\n")
+            print(
+                "6: Retreive number of children with alternative diagnosis\n")
         user_input = input("Enter here: ")
         try:
             value = int(user_input)
@@ -709,7 +723,7 @@ def data_menu(surgery):
             get_specific_numbers(surgery, 9)
             break
         else:
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
 
 
 def med_menu():
@@ -749,7 +763,7 @@ def med_menu():
             calculate_average_age("Diagnostic testing")
             break
         else :
-            print(f'{user_input} is not one of the available options, please try again.\n')
+            print(f'{user_input} is not one of the options, try again.\n')
 
 
 
