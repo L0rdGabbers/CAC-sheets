@@ -238,6 +238,7 @@ It was used in the get_numbers() and get_specific_numbers() functions
 * I tested all possible user inputs to ensure they were printing the correct data inside the codeanywhere application, and I entered incorrect strings in all areas to ensure that incorrect data would not be accepted.
 * I then repeated this within the deployed terminal on the same computer.
 * I ensured that the Allergy Spreadsheet was available on other devices so that it could be read by other users.
+* On the iphone, the terminal would not respond to my typing.
 
 ### *Verification* 
 * I ran my code run.py code through PEP8 python validator ironed out all whitespace and spacing issues until no errors returned.
