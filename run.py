@@ -671,7 +671,7 @@ def data_menu(surgery):
         print(
             "4: Retrieve number of children per inhalation device post review")
         print(
-            "5: Retrieve number of hildren who had received allergy testing")
+            "5: Retrieve number of children who had received allergy testing")
         if surgery == "":
             print(
                 "6: Retreive number of children with an alternative diagnosis")
