@@ -515,7 +515,9 @@ def get_numbers(col_num):
     data = numpy.array(columns)
     unique, counts = numpy.unique(data, return_counts=True)
     my_dict = (dict(zip(unique, counts)))
-    # This code was able to be created thanks to Ozgur Vatansever and Mateen Ulhaq on https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
+    # This code was able to be created thanks
+    # to Ozgur Vatansever and Mateen Ulhaq on
+    # https://stackoverflow.com/questions/28663856/how-do-i-count-the-occurrence-of-a-certain-item-in-an-ndarray
     for key, value in my_dict.items():
         print("{}: {}\n".format(key, value))
     print("Data complete!")
@@ -524,28 +526,28 @@ def get_numbers(col_num):
         main()
 
 
-def get_specific_numbers(specification, col_num):
+def get_specific_numbers(specify, col_num):
     """
     Provides a specific list of data based on whether
     the user from a particular surgery wishes to examine a particular surgery
     or whether they wish to examine a particular referral reason.
     """
-    if specification == "Poor control" or specification == "Diagnostic testing":
-        print(f"Calculating numbers of children on {specification.lower()}.\n")
+    if specify == "Poor control" or specify == "Diagnostic testing":
+        print(f"Calculating numbers of children on {specify.lower()}.\n")
         specific_column = SHEET.col_values(13)
     else:
-        print(f"Calculating number of patients from  {specification}...\n")
+        print(f"Calculating number of patients from  {specify}...\n")
         specific_column = SHEET.col_values(5)
     specific_column.pop(0)
     specific_array = numpy.array(specific_column)
-    specification_indices = numpy.where(specific_array == specification)[0]
+    specify_indices = numpy.where(specific_array == specify)[0]
     columns = SHEET.col_values(col_num)
     columns.pop(0)
     data = numpy.array(columns)
-    old_list = [data[x] for x in specification_indices]
+    old_list = [data[x] for x in specify_indices]
     new_list = [x for x in old_list if x != ""]
     if new_list == []:
-        print(f"{specification} has no data of this type.")
+        print(f"{specify} has no data of this type.")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
@@ -560,7 +562,7 @@ def get_specific_numbers(specification, col_num):
             main()
 
 
-def calculate_average_age(specification):
+def calculate_average_age(specify):
     """
     Determines the average age of all patients,
     or average age of patients based upon user's specified referral reason.
@@ -570,7 +572,7 @@ def calculate_average_age(specification):
     dor_col = SHEET.col_values(3)
     dob_col.pop(0)
     dor_col.pop(0)
-    if specification == "":
+    if specify == "":
         for x, y in zip(dob_col, dor_col):
             age = get_age_in_months(x, y)
             ages_in_months.append(age)
@@ -585,11 +587,11 @@ def calculate_average_age(specification):
         specific_column = SHEET.col_values(13)
         specific_column.pop(0)
         specific_array = numpy.array(specific_column)
-        specification_indices = numpy.where(specific_array == specification)[0]
+        specify_indices = numpy.where(specific_array == specify)[0]
         dates_of_birth = numpy.array(dob_col)
         dates_of_referral = numpy.array(dor_col)
-        first_list = [dates_of_birth[x] for x in specification_indices]
-        second_list = [dates_of_referral[x] for x in specification_indices]
+        first_list = [dates_of_birth[x] for x in specify_indices]
+        second_list = [dates_of_referral[x] for x in specify_indices]
         for x, y in zip(first_list, second_list):
             age = get_age_in_months(x, y)
             ages_in_months.append(age)
@@ -597,7 +599,7 @@ def calculate_average_age(specification):
         y = average_months // 12
         m = average_months % 12
         print(
-            f"{specification} patient average age is {y}y{m}m\n")
+            f"{specify} patient average age is {y}y{m}m\n")
         go_back = input("To return to the main menu, press enter here: ")
         if isinstance(go_back, str):
             main()
@@ -669,7 +671,7 @@ def data_menu(surgery):
         print(
             "4: Retrieve number of children per inhalation device post review")
         print(
-            "5: Retrieve number of children: who had recieved allergy testing")
+            "5: Retrieve number of hildren who had received allergy testing")
         if surgery == "":
             print(
                 "6: Retreive number of children with an alternative diagnosis")
@@ -735,7 +737,7 @@ def med_menu():
         print("1: Retrieve number of patients on each medicine")
         print("2: Retrieve medicine numbers of patients on poor control")
         print("3: Retrieve medicine numbers of patients on diagnostic testing")
-        print("4: Retrieve average of all patients")
+        print("4: Retrieve average age of all patients")
         print("5: Retrieve average age of patients on poor control")
         print("6: Retrieve average age of patients on diagnostic testing\n")
         user_input = input("Enter here: ")
