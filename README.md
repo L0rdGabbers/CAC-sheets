@@ -44,7 +44,6 @@ It is designed for CAC allergy clinicians to add new patients to a Google Sheet 
     * [***gspread***](#gspread)
 1. [**Flow Chart**](#flow-chart)
 1. [**Testing Phase**](#testing-phase)
-    * [***Responsiveness***](#responsiveness)
     * [***Functionality***](#functionality)
     * [***Verification***](#verification)
 1. [**Bugs**](#bugs)
@@ -249,7 +248,7 @@ It was used in the get_numbers() and get_specific_numbers() functions
 ### *Calling the main menu twice*
 * There was an issue where, if you had performed a number of tasks on this program and then called the close program function, it would return to the main menu. After doing this a number of times, it would, eventually close.
 * This bug was caused by forgetting to add 'break' into a while True loop, and so whilst other functions were successfully being called, when they had finished their instructions, the main menu would resume its unfinished loop.
-* This issue was resolved by adding 'break' whereever the main() function was called in any and all while True loops.
+* This issue was resolved by adding 'break' whereever the functions inside the main() function was called.
 
 ### *Unresolved bugs*
 *No other bugs have been found after going through the entirety of the code.
