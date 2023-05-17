@@ -57,15 +57,15 @@ It is designed for CAC allergy clinicians to add new patients to a Google Sheet 
     * [**Project**](#project)
 ​
 ## **Planning stage**
-### **Target Audiences:**
+### **Target Audiences**
 * CAC Clinicians
 ​
-### **User Stories:**
+### **User Stories**
 * As a user, I want to update my patients to the CAC worksheet efficiently.
 * As a user, I want to be get a quick summary of the entire CAC worksheet easily.
 * As a user, I want to get complete data from specific GP surgeries.
 ​
-### **Site Aims:**
+### **Site Aims**
 * To standardise what data can be inputed into specific cells of the CAC worksheet, and to standardise the process of appending new patients.
 * To automise the process of collecting data from a Google Sheets worksheet in a way that is easy to learn and execute.
 ​​
