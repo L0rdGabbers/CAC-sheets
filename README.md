@@ -1,6 +1,6 @@
-# **CAC data automation**
+# **CAC Data Automation**
 ## **Site Overview**
-CAC data automation is a python terminal interface running on a Code Institute mock terminal on Heroku.
+CAC Data Automation is a python terminal interface running on a Code Institute mock terminal on Heroku.
 It is designed for CAC allergy clinicians to add new patients to a Google Sheet worksheet and to report sheet-wide data back to the user.
 
 <img src="docs/readme_images/cac_screenshot.png">
